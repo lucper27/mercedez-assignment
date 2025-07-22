@@ -5,5 +5,5 @@ import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPaginatedResponse
 
 public interface SwapiPeopleClient {
 
-    SwapiPaginatedResponseDTO query();
+    SwapiPaginatedResponseDTO query(int page, int size, String name);
 }

@@ -6,5 +6,5 @@ import com.swapi.adapter.application.query.pagination.PaginatedResponse;
 
 public interface PeopleService {
 
-    PaginatedResponse<PeopleResponseDTO> query();
+    PaginatedResponse<PeopleResponseDTO> query(int page, int size, String name);
 }

@@ -25,8 +25,8 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public PaginatedResponse<PeopleResponseDTO> query() {
-        SwapiPaginatedResponseDTO response = swapiPeopleClient.query();
+    public PaginatedResponse<PeopleResponseDTO> query(int page, int size, String name) {
+        SwapiPaginatedResponseDTO response = swapiPeopleClient.query(page, size, name);
         List<PeopleResponseDTO> peopleResponseDTOS = new ArrayList<>();
 
         peopleResponseDTOS = response.getResults()
