@@ -1,9 +1,26 @@
 package com.swapi.adapter.infraestructure.rest;
 
+import com.swapi.adapter.application.dto.PeopleResponseDTO;
+import com.swapi.adapter.application.query.pagination.PaginatedResponse;
+import com.swapi.adapter.domain.service.PeopleService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/people")
 public class PeopleResource {
+
+    private final PeopleService peopleService;
+
+    public PeopleResource(PeopleService peopleService) {
+        this.peopleService = peopleService;
+    }
+
+    @GetMapping
+    public ResponseEntity<PaginatedResponse<PeopleResponseDTO>> getAllPeople() {
+        PaginatedResponse<PeopleResponseDTO> response = peopleService.query();
+        return ResponseEntity.ok(response);
+    }
 }

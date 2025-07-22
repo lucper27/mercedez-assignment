@@ -1,14 +1,11 @@
 package com.swapi.adapter.application.dto;
 
-import java.util.List;
 
 public class PeopleResponseDTO {
 
     private String birthYear;
 
     private String eyeColor;
-
-    private List<String> films;
 
     private String gender;
 
@@ -28,13 +25,7 @@ public class PeopleResponseDTO {
 
     private String edited;
 
-    private List<String> species;
-
-    private List<String> starships;
-
     private String url;
-
-    private List<String> vehicles;
 
     public PeopleResponseDTO() {
     }
@@ -53,14 +44,6 @@ public class PeopleResponseDTO {
 
     public void setEyeColor(String eyeColor) {
         this.eyeColor = eyeColor;
-    }
-
-    public List<String> getFilms() {
-        return films;
-    }
-
-    public void setFilms(List<String> films) {
-        this.films = films;
     }
 
     public String getGender() {
@@ -135,35 +118,11 @@ public class PeopleResponseDTO {
         this.edited = edited;
     }
 
-    public List<String> getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(List<String> species) {
-        this.species = species;
-    }
-
-    public List<String> getStarships() {
-        return starships;
-    }
-
-    public void setStarships(List<String> starships) {
-        this.starships = starships;
-    }
-
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public List<String> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(List<String> vehicles) {
-        this.vehicles = vehicles;
     }
 }
