@@ -17,14 +17,14 @@ public class SwapiPeopleClientImpl implements SwapiPeopleClient {
 
 
     @Override
-    public SwapiPaginatedResponseDTO query() {
-        int currentPage = 1;
+    public SwapiPaginatedResponseDTO query(int page, int size, String name) {
 
         String url = UriComponentsBuilder
                 .fromHttpUrl("https://www.swapi.tech/api/people")
                 .queryParam("expanded", "true")
-                .queryParam("page", currentPage)
-                .queryParam("limit", 10)
+                .queryParam("page", page)
+                .queryParam("limit", size)
+                .queryParam("name", name)
                 .toUriString();
 
         SwapiPaginatedResponseDTO response = restTemplate.getForObject(url, SwapiPaginatedResponseDTO.class);

@@ -2,6 +2,7 @@ package com.swapi.adapter.infraestructure.rest;
 
 import com.swapi.adapter.application.dto.PeopleResponseDTO;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;
+import com.swapi.adapter.application.query.sort.people.PeopleQueryParameters;
 import com.swapi.adapter.domain.service.PeopleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,10 @@ public class PeopleResource {
     }
 
     @GetMapping
-    public ResponseEntity<PaginatedResponse<PeopleResponseDTO>> getAllPeople() {
-        PaginatedResponse<PeopleResponseDTO> response = peopleService.query();
+    public ResponseEntity<PaginatedResponse<PeopleResponseDTO>> queryPeople(
+            PeopleQueryParameters params
+    ) {
+        PaginatedResponse<PeopleResponseDTO> response = peopleService.query(params);
         return ResponseEntity.ok(response);
     }
 }
