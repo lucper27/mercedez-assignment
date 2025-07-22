@@ -1,46 +1,35 @@
 package com.swapi.adapter.application.service;
 
 import com.swapi.adapter.application.dto.PeopleResponseDTO;
-import com.swapi.adapter.application.mapper.SwapiPeopleResponseMapper;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;
+import com.swapi.adapter.application.query.sort.people.PeopleNaturalQuery;
+import com.swapi.adapter.application.query.sort.people.PeopleQueryParameters;
+import com.swapi.adapter.application.query.sort.people.PeopleSortedQuery;
 import com.swapi.adapter.domain.service.PeopleService;
-import com.swapi.adapter.infraestructure.client.swapi.SwapiPeopleClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPaginatedResponseDTO;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PeopleServiceImpl implements PeopleService {
 
-    private final SwapiPeopleClient swapiPeopleClient;
+    private final PeopleNaturalQuery naturalQuery;
 
-    private final SwapiPeopleResponseMapper swapiPeopleResponseMapper;
+    private final PeopleSortedQuery sortedQuery;
 
-    public PeopleServiceImpl(SwapiPeopleClient swapiPeopleClient, SwapiPeopleResponseMapper swapiPeopleResponseMapper) {
-        this.swapiPeopleClient = swapiPeopleClient;
-        this.swapiPeopleResponseMapper = swapiPeopleResponseMapper;
+    private final int MINIMUM = 1;
+
+    public PeopleServiceImpl(PeopleNaturalQuery naturalQuery, PeopleSortedQuery sortedQuery) {
+        this.naturalQuery = naturalQuery;
+        this.sortedQuery = sortedQuery;
     }
 
     @Override
-    public PaginatedResponse<PeopleResponseDTO> query(int page, int size, String name) {
-        SwapiPaginatedResponseDTO response = swapiPeopleClient.query(page, size, name);
-        List<PeopleResponseDTO> peopleResponseDTOS = new ArrayList<>();
+    public PaginatedResponse<PeopleResponseDTO> query(PeopleQueryParameters params) {
+        boolean sort = params.getSort() != null && !params.getSort().isEmpty();
+        if (sort) {
+            return sortedQuery.execute(params);
+        }
 
-        peopleResponseDTOS = response.getResults()
-                .stream()
-                .map(swapiPeopleResponseMapper::toDto)
-                .collect(Collectors.toUnmodifiableList());
-
-        //hacerme un mapper
-        PaginatedResponse<PeopleResponseDTO> paginatedResponse = new PaginatedResponse<>();
-        paginatedResponse.setContent(peopleResponseDTOS);
-        paginatedResponse.setTotalElements(response.getTotal_records());
-        paginatedResponse.setTotalPages(response.getTotal_pages());
-
-        return paginatedResponse;
+        return naturalQuery.execute(params);
     }
 
 }

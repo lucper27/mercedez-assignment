@@ -24,6 +24,7 @@ public class SwapiPeopleClientImpl implements SwapiPeopleClient {
                 .queryParam("expanded", "true")
                 .queryParam("page", page)
                 .queryParam("limit", size)
+                .queryParam("name", name)
                 .toUriString();
 
         SwapiPaginatedResponseDTO response = restTemplate.getForObject(url, SwapiPaginatedResponseDTO.class);
