@@ -36,7 +36,7 @@ public class SwapiPlanetClientImpl implements SwapiPlanetClient {
     @Override
     public SwapiPlanetPaginatedResponseDTO getAllPaginated (int page, int size) {
         String url = UriComponentsBuilder
-                .fromHttpUrl("https://www.swapi.tech/api/planets")
+                .fromHttpUrl(baseUrl + "/planets")
                 .queryParam("expanded", "true")
                 .queryParam("page", page)
                 .queryParam("limit", size)
