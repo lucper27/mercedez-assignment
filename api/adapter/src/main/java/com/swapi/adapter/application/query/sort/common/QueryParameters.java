@@ -1,6 +1,6 @@
-package com.swapi.adapter.application.query.sort.people;
+package com.swapi.adapter.application.query.sort.common;
 
-public class PeopleQueryParameters {
+public class QueryParameters {
 
     private int page;
 
@@ -12,7 +12,7 @@ public class PeopleQueryParameters {
 
     private String direction;
 
-    public PeopleQueryParameters() {
+    public QueryParameters() {
     }
 
     public int getPage() {

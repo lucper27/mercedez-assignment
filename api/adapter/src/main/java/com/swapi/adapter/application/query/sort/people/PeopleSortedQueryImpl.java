@@ -4,10 +4,12 @@ import com.swapi.adapter.application.dto.PeopleResponseDTO;
 import com.swapi.adapter.application.mapper.SwapiPeopleResponseMapper;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;
 import com.swapi.adapter.application.query.sort.SortStrategy;
+import com.swapi.adapter.application.query.sort.common.QueryParameters;
 import com.swapi.adapter.application.query.sort.common.utils.PaginationCalculation;
 import com.swapi.adapter.application.query.sort.common.utils.SortDirectionUtils;
 import com.swapi.adapter.infraestructure.client.swapi.SwapiPeopleClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPaginatedResponseDTO;
+import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiBasePaginatedResponseDTO;
+import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,12 +33,11 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
     }
 
     @Override
-    public PaginatedResponse<PeopleResponseDTO> execute(PeopleQueryParameters params) {
-        // hacer verificación de sortBy
-        SwapiPaginatedResponseDTO response = swapiPeopleClient.query(MINIMUM, MINIMUM, "");
+    public PaginatedResponse<PeopleResponseDTO> execute(QueryParameters params) {
+        SwapiBasePaginatedResponseDTO response = swapiPeopleClient.query(MINIMUM, MINIMUM, "");
         int totalItems = response.getTotal_records();
 
-        SwapiPaginatedResponseDTO responseWithAllData = swapiPeopleClient.query(MINIMUM, totalItems, "");
+        SwapiPeoplePaginatedResponseDTO responseWithAllData = swapiPeopleClient.query(MINIMUM, totalItems, "");
 
         List<PeopleResponseDTO> sorted = sortResponse(params.getSort(), params.getDirection(), responseWithAllData);
 
@@ -56,7 +57,7 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
 
     }
 
-    private List<PeopleResponseDTO> sortResponse(String sort, String directionOrder, SwapiPaginatedResponseDTO responseFromAPI) {
+    private List<PeopleResponseDTO> sortResponse(String sort, String directionOrder, SwapiPeoplePaginatedResponseDTO responseFromAPI) {
         List<PeopleResponseDTO> peopleResponseDTOS = responseFromAPI.getResults()
                 .stream()
                 .map(swapiPeopleResponseMapper::toDto)

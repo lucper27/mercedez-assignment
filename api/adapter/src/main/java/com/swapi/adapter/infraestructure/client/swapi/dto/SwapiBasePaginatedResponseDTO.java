@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SwapiPaginatedResponseDTO {
+public class SwapiBasePaginatedResponseDTO {
 
     private String message;
 
@@ -17,9 +17,9 @@ public class SwapiPaginatedResponseDTO {
 
     private String next;
 
-    private List<SwapiPersonWrapperDTO> results;
 
-    public SwapiPaginatedResponseDTO() {
+
+    public SwapiBasePaginatedResponseDTO() {
     }
 
     public String getMessage() {
@@ -60,13 +60,5 @@ public class SwapiPaginatedResponseDTO {
 
     public void setNext(String next) {
         this.next = next;
-    }
-
-    public List<SwapiPersonWrapperDTO> getResults() {
-        return results;
-    }
-
-    public void setResults(List<SwapiPersonWrapperDTO> results) {
-        this.results = results;
     }
 }

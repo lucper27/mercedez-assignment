@@ -3,19 +3,19 @@ package com.swapi.adapter.infraestructure.client.swapi.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SwapiPersonWrapperDTO extends SwapiItemWrapperDTO {
+public class SwapiPlanetWrapperDTO extends SwapiItemWrapperDTO {
 
-    private SwapiPersonDTO properties;
+    private SwapiPlanetDTO properties;
 
-    public SwapiPersonWrapperDTO() {
+    public SwapiPlanetWrapperDTO() {
         super();
     }
 
-    public SwapiPersonDTO getProperties() {
+    public SwapiPlanetDTO getProperties() {
         return properties;
     }
 
-    public void setProperties(SwapiPersonDTO properties) {
+    public void setProperties(SwapiPlanetDTO properties) {
         this.properties = properties;
     }
 }
