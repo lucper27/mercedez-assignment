@@ -54,7 +54,7 @@ public class SwapiPeopleClientImpl implements SwapiPeopleClient {
     @Override
     public List<SwapiPersonWrapperDTO> searchByName(String name) {
         String url = UriComponentsBuilder
-                .fromHttpUrl("https://www.swapi.tech/api/people")
+                .fromHttpUrl(baseUrl + "/people")
                 .queryParam("expanded", "true")
                 .queryParam("name", name)
                 .toUriString();
