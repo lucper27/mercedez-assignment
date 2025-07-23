@@ -1,6 +1,5 @@
 package com.swapi.adapter.application.dto;
 
-import java.util.List;
 
 public class PlanetResponseDTO {
 
@@ -12,8 +11,6 @@ public class PlanetResponseDTO {
 
     private String edited;
 
-    private List<String> films;
-
     private String gravity;
 
     private String name;
@@ -22,15 +19,11 @@ public class PlanetResponseDTO {
 
     private String population;
 
-    private List<String> residents;
-
     private String rotationPeriod;
 
     private String surfaceWater;
 
     private String terrain;
-
-    private String url;
 
     public PlanetResponseDTO() {
     }
@@ -67,14 +60,6 @@ public class PlanetResponseDTO {
         this.edited = edited;
     }
 
-    public List<String> getFilms() {
-        return films;
-    }
-
-    public void setFilms(List<String> films) {
-        this.films = films;
-    }
-
     public String getGravity() {
         return gravity;
     }
@@ -107,14 +92,6 @@ public class PlanetResponseDTO {
         this.population = population;
     }
 
-    public List<String> getResidents() {
-        return residents;
-    }
-
-    public void setResidents(List<String> residents) {
-        this.residents = residents;
-    }
-
     public String getRotationPeriod() {
         return rotationPeriod;
     }
@@ -139,11 +116,4 @@ public class PlanetResponseDTO {
         this.terrain = terrain;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

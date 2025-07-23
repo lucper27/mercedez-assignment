@@ -3,8 +3,9 @@ package com.swapi.adapter.application.query.sort.people;
 import com.swapi.adapter.application.dto.PeopleResponseDTO;
 import com.swapi.adapter.application.mapper.SwapiPeopleResponseMapper;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;
+import com.swapi.adapter.application.query.sort.common.QueryParameters;
 import com.swapi.adapter.infraestructure.client.swapi.SwapiPeopleClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPaginatedResponseDTO;
+import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class PeopleNaturalQueryImpl implements PeopleNaturalQuery {
     }
 
     @Override
-    public PaginatedResponse<PeopleResponseDTO> execute(PeopleQueryParameters params) {
-        SwapiPaginatedResponseDTO response = swapiPeopleClient.query(params.getPage(), params.getSize(), params.getName());
+    public PaginatedResponse<PeopleResponseDTO> execute(QueryParameters params) {
+        SwapiPeoplePaginatedResponseDTO response = swapiPeopleClient.query(params.getPage(), params.getSize(), params.getName());
 
         List<PeopleResponseDTO> peopleResponseDTOS = response.getResults()
                 .stream()
