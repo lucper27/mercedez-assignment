@@ -1,10 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Inject, inject, Injectable } from '@angular/core';
 import { PaginatedResponse } from '../../shared/models/paginated-response.model';
 import { IPeople } from '../models/people.model';
 import { ICommonFilter } from '../../shared/models/filter.model';
 import { Observable } from 'rxjs';
 import { FilterParamsService } from '../../shared/utils/filter-params.service';
+import { environment } from '../../../environments/environment';
 
 type PeopleResponseType = HttpResponse<PaginatedResponse<IPeople>>;
 
@@ -17,13 +18,15 @@ export class PeopleService {
 
   private readonly filterParamsService = inject(FilterParamsService);
 
-  resourceUrl = 'http://localhost:8080/api/people';
+  constructor(@Inject('API_BASE_URL') private readonly baseUrl: string) {}
 
-  constructor() { }
-
-  query(options?: ICommonFilter): Observable<PeopleResponseType>{
+  query(options?: ICommonFilter): Observable<PeopleResponseType> {
     const params = this.filterParamsService.convertOptionsIntoParams(options);
-    return this.http.get<PaginatedResponse<IPeople>>(this.resourceUrl, {params: params, observe: 'response'});
+    const url = `${this.baseUrl}/people`;
+    return this.http.get<PaginatedResponse<IPeople>>(url, {
+      params,
+      observe: 'response'
+    });
   }
 
   

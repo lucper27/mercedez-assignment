@@ -9,6 +9,7 @@ import Lara from '@primeng/themes/lara';
 import { routes } from './app.routes';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { MessageService } from 'primeng/api';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
         }
       }
     }),
-    MessageService
+    MessageService,
+    { provide: 'API_BASE_URL', useValue: environment.apiBaseUrl }
   ]
 };

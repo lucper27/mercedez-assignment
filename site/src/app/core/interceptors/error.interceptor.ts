@@ -9,8 +9,6 @@ import { inject } from '@angular/core';
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const messageService = inject(MessageService);
 
-
-
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {      
       messageService.add({

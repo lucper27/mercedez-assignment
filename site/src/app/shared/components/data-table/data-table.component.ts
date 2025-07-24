@@ -41,11 +41,15 @@ export class DataTableComponent {
   }
 
   onClick(): void {
+    if (this.name !== '') {
     this.loadingBtn = true;
     this.nameSearch.emit(this.name);
+    }
+
   }
 
   onClearFiltersClick() {
+    this.name = '';
     this.clearFilters.emit();
     this.loadingTable = true;
     this.data = [];
