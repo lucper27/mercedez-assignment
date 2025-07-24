@@ -1,1 +1,11 @@
-<p>list works!</p>
+<app-data-table 
+    [columns]="columns" 
+    [data]="planets || []" 
+    [totalRecords]="totalRecords" 
+    [rows]="FIXED_SIZE"
+    [loadingTable]="loadingTable" 
+    [loadingBtn]="loadingBtn"
+    (nameSearch)="onNameSearch($event)"
+    (lazyChange)="handleTableChange($event)"
+    (clearFilters)="clearFilters($event)">
+</app-data-table>

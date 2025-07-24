@@ -1,1 +1,11 @@
-<p>list works!</p>
+<app-data-table 
+    [columns]="columns" 
+    [data]="people || []" 
+    [totalRecords]="totalRecords" 
+    [rows]="FIXED_SIZE"
+    (lazyChange)="handleTableChange($event)" 
+    [loadingTable]="loadingTable" 
+    [loadingBtn]="loadingBtn"
+    (nameSearch)="onNameSearch($event)"
+    (clearFilters)="clearFilters($event)">
+</app-data-table>
