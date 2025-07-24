@@ -17,6 +17,14 @@ public class PaginatedResponse<T> {
     public PaginatedResponse() {
     }
 
+    public PaginatedResponse(List<T> content, int page, int size, long totalElements, int totalPages) {
+        this.content = content;
+        this.page = page;
+        this.size = size;
+        this.totalElements = totalElements;
+        this.totalPages = totalPages;
+    }
+
     public List<T> getContent() {
         return content;
     }

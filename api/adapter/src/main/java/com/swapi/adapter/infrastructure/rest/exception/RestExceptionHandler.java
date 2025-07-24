@@ -6,9 +6,12 @@ import com.swapi.adapter.application.exception.dto.ErrorResponseDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.validation.BindException;
+
 
 import java.time.Instant;
 
@@ -21,6 +24,13 @@ public class RestExceptionHandler {
                 ex.getValue(), ex.getName(), ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "unknown");
         return buildErrorResponse(HttpStatus.BAD_REQUEST, message, request.getRequestURI());
     }
+
+    @ExceptionHandler({ MethodArgumentNotValidException.class, BindException.class })
+    public ResponseEntity<ErrorResponseDTO> handleBindingExceptions(Exception ex, HttpServletRequest request) {
+        String message = "Invalid request parameters. Check types and format.";
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, message, request.getRequestURI());
+    }
+
 
     @ExceptionHandler(PeopleClientException.class)
     public ResponseEntity<ErrorResponseDTO> handlePeopleClientException(PeopleClientException ex, HttpServletRequest request) {
