@@ -3,6 +3,8 @@ package com.swapi.adapter.application.query.sort.people;
 import com.swapi.adapter.application.dto.PeopleResponseDTO;
 import com.swapi.adapter.application.query.sort.SortStrategy;
 import com.swapi.adapter.application.query.sort.common.NoOpSort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import java.util.Map;
 
 @Service
 public class PeopleSortStrategyFactoryImpl implements PeopleSortStrategyFactory {
+
+    private final Logger log = LoggerFactory.getLogger(PeopleSortStrategyFactoryImpl.class);
 
     private final Map<String, SortStrategy<PeopleResponseDTO>> strategies;
 
@@ -25,6 +29,7 @@ public class PeopleSortStrategyFactoryImpl implements PeopleSortStrategyFactory 
 
     @Override
     public SortStrategy<PeopleResponseDTO> getStrategy(String sortBy) {
+        log.debug("getting sorting strategy for {}", sortBy);
         return strategies.getOrDefault(sortBy, new NoOpSort<>());
     }
 }
