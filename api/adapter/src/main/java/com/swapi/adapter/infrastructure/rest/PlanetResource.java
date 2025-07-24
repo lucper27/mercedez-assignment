@@ -1,4 +1,4 @@
-package com.swapi.adapter.infraestructure.rest;
+package com.swapi.adapter.infrastructure.rest;
 
 import com.swapi.adapter.application.dto.PlanetResponseDTO;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;

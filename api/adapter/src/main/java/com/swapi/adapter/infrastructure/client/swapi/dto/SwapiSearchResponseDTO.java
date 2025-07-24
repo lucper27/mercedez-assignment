@@ -1,4 +1,4 @@
-package com.swapi.adapter.infraestructure.client.swapi.dto;
+package com.swapi.adapter.infrastructure.client.swapi.dto;
 
 
 public class SwapiSearchResponseDTO {

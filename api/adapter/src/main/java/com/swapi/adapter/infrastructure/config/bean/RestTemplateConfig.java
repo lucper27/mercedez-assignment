@@ -1,4 +1,4 @@
-package com.swapi.adapter.infraestructure.config.bean;
+package com.swapi.adapter.infrastructure.config.bean;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

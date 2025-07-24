@@ -2,7 +2,7 @@ package com.swapi.adapter.application.mapper;
 
 
 import com.swapi.adapter.application.dto.PeopleResponseDTO;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPersonWrapperDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPersonWrapperDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

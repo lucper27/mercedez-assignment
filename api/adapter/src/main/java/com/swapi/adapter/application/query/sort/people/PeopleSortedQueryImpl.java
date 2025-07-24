@@ -7,9 +7,9 @@ import com.swapi.adapter.application.query.sort.SortStrategy;
 import com.swapi.adapter.application.query.sort.common.QueryParameters;
 import com.swapi.adapter.application.query.sort.common.utils.PaginationCalculation;
 import com.swapi.adapter.application.query.sort.common.utils.SortDirectionUtils;
-import com.swapi.adapter.infraestructure.client.swapi.SwapiPeopleClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiBasePaginatedResponseDTO;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.SwapiPeopleClient;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiBasePaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

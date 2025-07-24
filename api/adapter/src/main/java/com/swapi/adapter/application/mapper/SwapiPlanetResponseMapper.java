@@ -2,7 +2,7 @@ package com.swapi.adapter.application.mapper;
 
 
 import com.swapi.adapter.application.dto.PlanetResponseDTO;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPlanetWrapperDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPlanetWrapperDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

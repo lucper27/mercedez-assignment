@@ -4,8 +4,8 @@ import com.swapi.adapter.application.dto.PeopleResponseDTO;
 import com.swapi.adapter.application.mapper.SwapiPeopleResponseMapper;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;
 import com.swapi.adapter.application.query.sort.common.QueryParameters;
-import com.swapi.adapter.infraestructure.client.swapi.SwapiPeopleClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.SwapiPeopleClient;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
