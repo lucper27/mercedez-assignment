@@ -6,10 +6,14 @@ import com.swapi.adapter.application.query.sort.common.QueryParameters;
 import com.swapi.adapter.application.query.sort.planet.PlanetNaturalQuery;
 import com.swapi.adapter.application.query.sort.planet.PlanetSortedQuery;
 import com.swapi.adapter.domain.service.PlanetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PlanetServiceImpl implements PlanetService {
+
+    private final Logger log = LoggerFactory.getLogger(PlanetServiceImpl.class);
 
     private final PlanetNaturalQuery naturalQuery;
 
@@ -22,6 +26,7 @@ public class PlanetServiceImpl implements PlanetService {
 
     @Override
     public PaginatedResponse<PlanetResponseDTO> query(QueryParameters params) {
+        log.debug("query planets with params {}", params);
         boolean sort = params.getSort() != null && !params.getSort().isEmpty();
         if (sort) {
             return sortedQuery.execute(params);

@@ -4,14 +4,18 @@ import com.swapi.adapter.application.dto.PlanetResponseDTO;
 import com.swapi.adapter.application.mapper.SwapiPlanetResponseMapper;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;
 import com.swapi.adapter.application.query.sort.common.QueryParameters;
-import com.swapi.adapter.infraestructure.client.swapi.SwapiPlanetClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPlanetPaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.SwapiPlanetClient;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPlanetPaginatedResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PlanetNaturalQueryImpl implements PlanetNaturalQuery {
+
+    private final Logger log = LoggerFactory.getLogger(PlanetNaturalQueryImpl.class);
 
     private final SwapiPlanetClient swapiPlanetClient;
 
@@ -24,6 +28,7 @@ public class PlanetNaturalQueryImpl implements PlanetNaturalQuery {
 
     @Override
     public PaginatedResponse<PlanetResponseDTO> execute(QueryParameters params) {
+        log.debug("executing planet natural query with params {}", params);
         SwapiPlanetPaginatedResponseDTO response = swapiPlanetClient.query(params.getPage(), params.getSize(), params.getName());
 
         List<PlanetResponseDTO> planetResponseDTOS = response.getResults()

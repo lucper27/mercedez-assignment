@@ -1,7 +1,7 @@
-package com.swapi.adapter.infraestructure.client.swapi;
+package com.swapi.adapter.infrastructure.client.swapi;
 
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPlanetPaginatedResponseDTO;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPlanetWrapperDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPlanetPaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPlanetWrapperDTO;
 
 import java.util.List;
 

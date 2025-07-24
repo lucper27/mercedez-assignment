@@ -4,14 +4,18 @@ import com.swapi.adapter.application.dto.PeopleResponseDTO;
 import com.swapi.adapter.application.mapper.SwapiPeopleResponseMapper;
 import com.swapi.adapter.application.query.pagination.PaginatedResponse;
 import com.swapi.adapter.application.query.sort.common.QueryParameters;
-import com.swapi.adapter.infraestructure.client.swapi.SwapiPeopleClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.SwapiPeopleClient;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PeopleNaturalQueryImpl implements PeopleNaturalQuery {
+
+    private final Logger log = LoggerFactory.getLogger(PeopleNaturalQueryImpl.class);
 
     private final SwapiPeopleClient swapiPeopleClient;
 
@@ -24,6 +28,7 @@ public class PeopleNaturalQueryImpl implements PeopleNaturalQuery {
 
     @Override
     public PaginatedResponse<PeopleResponseDTO> execute(QueryParameters params) {
+        log.debug("executing people natural query with params {}", params);
         SwapiPeoplePaginatedResponseDTO response = swapiPeopleClient.query(params.getPage(), params.getSize(), params.getName());
 
         List<PeopleResponseDTO> peopleResponseDTOS = response.getResults()

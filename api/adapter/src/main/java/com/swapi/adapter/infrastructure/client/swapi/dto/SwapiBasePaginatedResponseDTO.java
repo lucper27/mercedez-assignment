@@ -1,8 +1,6 @@
-package com.swapi.adapter.infraestructure.client.swapi.dto;
+package com.swapi.adapter.infrastructure.client.swapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SwapiBasePaginatedResponseDTO {

@@ -7,9 +7,11 @@ import com.swapi.adapter.application.query.sort.SortStrategy;
 import com.swapi.adapter.application.query.sort.common.QueryParameters;
 import com.swapi.adapter.application.query.sort.common.utils.PaginationCalculation;
 import com.swapi.adapter.application.query.sort.common.utils.SortDirectionUtils;
-import com.swapi.adapter.infraestructure.client.swapi.SwapiPeopleClient;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiBasePaginatedResponseDTO;
-import com.swapi.adapter.infraestructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.SwapiPeopleClient;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiBasePaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
 
 @Service
 public class PeopleSortedQueryImpl implements PeopleSortedQuery {
+
+    private final Logger log = LoggerFactory.getLogger(PeopleSortedQueryImpl.class);
 
     private final int MINIMUM = 1;
 
@@ -34,6 +38,7 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
 
     @Override
     public PaginatedResponse<PeopleResponseDTO> execute(QueryParameters params) {
+        log.debug("sorted people query with params {}", params);
         SwapiBasePaginatedResponseDTO response = swapiPeopleClient.query(MINIMUM, MINIMUM, "");
         int totalItems = response.getTotal_records();
 
@@ -58,6 +63,8 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
     }
 
     private List<PeopleResponseDTO> sortResponse(String sort, String directionOrder, SwapiPeoplePaginatedResponseDTO responseFromAPI) {
+        log.debug("response from api {}, direction order {}, sort {}", responseFromAPI, directionOrder, sort);
+        log.debug("sorting response....");
         List<PeopleResponseDTO> peopleResponseDTOS = responseFromAPI.getResults()
                 .stream()
                 .map(swapiPeopleResponseMapper::toDto)
