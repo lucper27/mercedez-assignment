@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+
+  adapter:
+    container_name: adapter
+    build:
+      context: ..
+      dockerfile: devops/Dockerfile.adapter
+    ports:
+      - "6969:8080"
+    environment:
+      - SWAPI_BASE_URL=https://www.swapi.tech/api
+      - FRONTEND_URL=http://localhost:4200
+    networks:
+      - swapi-network
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ..
+      dockerfile: devops/Dockerfile.frontend
+      args:
+        BACKEND_URL: http://localhost:6969/api
+    ports:
+      - "4200:80"
+    networks:
+      - swapi-network
+
+networks:
+  swapi-network:
+    driver: bridge
