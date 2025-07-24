@@ -1,1 +1,48 @@
-<p>data-table works!</p>
+<div class="card">
+  <div class="search__box">
+    <input pInputText [(ngModel)]="name" type="text" pSize="large" placeholder="Search by name"/>
+    <p-button 
+    label="Search"
+    [rounded]="true"
+    (onClick)="onClick()"
+    [loading]="loadingBtn"/>
+    <p-button 
+    label="Clear"
+    [rounded]="true"
+    (onClick)="onClearFiltersClick()"/>
+  </div>
+  
+  <p-table 
+  #dataTable
+  [value]="data"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [customSort]="true"
+  [paginator]="true"
+  [rows]="rows"
+  [totalRecords]="totalRecords"
+  [lazy]="true"
+  (onLazyLoad)="onLazyLoadHandler($event)"
+  [loading]="loadingTable">
+    <ng-template pTemplate="header">
+      <tr>
+        @for (col of columns; track col.field) {
+          @if (col.field === 'name' || col.field === 'created') {
+            <th [pSortableColumn]="col.field">
+              {{ col.header }}
+              <p-sortIcon [field]="col.field" />
+            </th>
+          } @else {
+            <th>{{ col.header }}</th>
+          }
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        @for (col of columns; track col.field) {
+        <td>{{ row[col.field] }}</td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
