@@ -30,6 +30,8 @@ public class PeopleResponseDTO {
     public PeopleResponseDTO() {
     }
 
+
+
     public String getBirthYear() {
         return birthYear;
     }
