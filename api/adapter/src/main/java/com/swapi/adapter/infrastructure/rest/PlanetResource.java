@@ -24,7 +24,7 @@ public class PlanetResource {
         this.planetService = planetService;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @GetMapping
     public ResponseEntity<PaginatedResponse<PlanetResponseDTO>> queryPlanets(QueryParameters params) {
         log.debug("Rest request to query planets w params {}", params);
