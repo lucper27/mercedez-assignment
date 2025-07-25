@@ -11,7 +11,7 @@ services:
       - "6969:8080"
     environment:
       - SWAPI_BASE_URL=https://www.swapi.tech/api
-      - FRONTEND_URL=http://localhost:4200
+      - CORS_ALLOWED_ORIGINS=http://localhost:4200
     networks:
       - swapi-network
 
