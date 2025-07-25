@@ -10,6 +10,7 @@ import com.swapi.adapter.application.query.sort.common.utils.SortDirectionUtils;
 import com.swapi.adapter.infrastructure.client.swapi.SwapiPeopleClient;
 import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiBasePaginatedResponseDTO;
 import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPeoplePaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPersonWrapperDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,12 +40,18 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
     @Override
     public PaginatedResponse<PeopleResponseDTO> execute(QueryParameters params) {
         log.debug("sorted people query with params {}", params);
-        SwapiBasePaginatedResponseDTO response = swapiPeopleClient.query(MINIMUM, MINIMUM, "");
-        int totalItems = response.getTotal_records();
+        String name = params.getName();
 
-        SwapiPeoplePaginatedResponseDTO responseWithAllData = swapiPeopleClient.query(MINIMUM, totalItems, "");
+        List<SwapiPersonWrapperDTO> results;
 
-        List<PeopleResponseDTO> sorted = sortResponse(params.getSort(), params.getDirection(), responseWithAllData);
+        if (name != null && !name.isBlank()) {
+            results = swapiPeopleClient.searchByName(name);
+        } else {
+            int totalItems = swapiPeopleClient.query(MINIMUM, MINIMUM, "").getTotal_records();
+            results = swapiPeopleClient.query(MINIMUM, totalItems, "").getResults();
+        }
+
+        List<PeopleResponseDTO> sorted = sortResponse(params.getSort(), params.getDirection(), results);
 
         int fromIndex = PaginationCalculation.calculateFromIndex(params.getPage(), params.getSize());
         int toIndex = PaginationCalculation.calculateToIndex(fromIndex, params.getSize(), sorted.size());
@@ -53,8 +60,8 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
 
         PaginatedResponse<PeopleResponseDTO> paginatedResponse = new PaginatedResponse<>();
         paginatedResponse.setContent(paginated);
-        paginatedResponse.setTotalElements(responseWithAllData.getTotal_records());
-        paginatedResponse.setTotalPages(responseWithAllData.getTotal_pages());
+        paginatedResponse.setTotalElements(sorted.size());
+        paginatedResponse.setTotalPages(PaginationCalculation.calculateTotalPages(sorted.size(), params.getSize()));
         paginatedResponse.setPage(params.getPage());
         paginatedResponse.setSize(params.getSize());
 
@@ -62,10 +69,10 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
 
     }
 
-    private List<PeopleResponseDTO> sortResponse(String sort, String directionOrder, SwapiPeoplePaginatedResponseDTO responseFromAPI) {
-        log.debug("response from api {}, direction order {}, sort {}", responseFromAPI, directionOrder, sort);
+    private List<PeopleResponseDTO> sortResponse(String sort, String directionOrder, List<SwapiPersonWrapperDTO> rawResults) {
         log.debug("sorting response....");
-        List<PeopleResponseDTO> peopleResponseDTOS = responseFromAPI.getResults()
+
+        List<PeopleResponseDTO> peopleResponseDTOS = rawResults
                 .stream()
                 .map(swapiPeopleResponseMapper::toDto)
                 .toList();
@@ -75,4 +82,5 @@ public class PeopleSortedQueryImpl implements PeopleSortedQuery {
 
         return sortStrategy.sort(peopleResponseDTOS, ascending);
     }
+
 }
