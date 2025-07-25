@@ -10,6 +10,7 @@ import com.swapi.adapter.application.query.sort.common.utils.SortDirectionUtils;
 import com.swapi.adapter.infrastructure.client.swapi.SwapiPlanetClient;
 import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiBasePaginatedResponseDTO;
 import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPlanetPaginatedResponseDTO;
+import com.swapi.adapter.infrastructure.client.swapi.dto.SwapiPlanetWrapperDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,12 +39,18 @@ public class PlanetSortedQueryImpl implements PlanetSortedQuery {
     @Override
     public PaginatedResponse<PlanetResponseDTO> execute(QueryParameters params) {
         log.debug("sorted planet query with params {}", params);
-        SwapiBasePaginatedResponseDTO response = swapiPlanetClient.query(MINIMUM, MINIMUM, "");
-        int totalItems = response.getTotal_records();
+        String name = params.getName();
 
-        SwapiPlanetPaginatedResponseDTO responseWithAllData = swapiPlanetClient.query(MINIMUM, totalItems, "");
+        List<SwapiPlanetWrapperDTO> results;
 
-        List<PlanetResponseDTO> sorted = sortResponse(params.getSort(), params.getDirection(), responseWithAllData);
+        if (name != null && !name.isBlank()) {
+            results = swapiPlanetClient.searchByName(name);
+        } else {
+            int totalItems = swapiPlanetClient.query(MINIMUM, MINIMUM, "").getTotal_records();
+            results = swapiPlanetClient.query(MINIMUM, totalItems, "").getResults();
+        }
+        
+        List<PlanetResponseDTO> sorted = sortResponse(params.getSort(), params.getDirection(), results);
 
         int fromIndex = PaginationCalculation.calculateFromIndex(params.getPage(), params.getSize());
         int toIndex = PaginationCalculation.calculateToIndex(fromIndex, params.getSize(), sorted.size());
@@ -52,19 +59,18 @@ public class PlanetSortedQueryImpl implements PlanetSortedQuery {
 
         PaginatedResponse<PlanetResponseDTO> paginatedResponse = new PaginatedResponse<>();
         paginatedResponse.setContent(paginated);
-        paginatedResponse.setTotalElements(responseWithAllData.getTotal_records());
-        paginatedResponse.setTotalPages(responseWithAllData.getTotal_pages());
+        paginatedResponse.setTotalElements(sorted.size());
+        paginatedResponse.setTotalPages(PaginationCalculation.calculateTotalPages(sorted.size(), params.getSize()));
         paginatedResponse.setPage(params.getPage());
         paginatedResponse.setSize(params.getSize());
 
         return paginatedResponse;
     }
 
-    private List<PlanetResponseDTO> sortResponse(String sort, String directionOrder, SwapiPlanetPaginatedResponseDTO responseFromAPI) {
-        log.debug("response from api {}, direction order {}, sort {}", responseFromAPI, directionOrder, sort);
+    private List<PlanetResponseDTO> sortResponse(String sort, String directionOrder, List<SwapiPlanetWrapperDTO> rawResults) {
         log.debug("sorting response....");
 
-        List<PlanetResponseDTO> planetResponseDTOS = responseFromAPI.getResults()
+        List<PlanetResponseDTO> planetResponseDTOS = rawResults
                 .stream()
                 .map(swapiPlanetResponseMapper::toDto)
                 .toList();
